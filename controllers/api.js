@@ -97,6 +97,11 @@ module.exports.addItem = function* addItem() {
 		return this.body = {error: true, message: "Must include an item, and the orderID"};
 	}
 
+	if (params.item === null) {
+		this.status = 400;
+		return this.body = {error: true, message: "Can't add an empty item"};
+	}
+
 	let order = yield db.getOrder(this.session.id);
 	if (order.error === true) {
 		// something went wrong during load
