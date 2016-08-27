@@ -44,14 +44,27 @@ module.exports = {
 	* @param {string} name - name of customer
 	* @param {string} address - full address of customer
 	* @param {string} phone - phone number of customer
-	* @returns {object} game -  The full game object
+	* @returns {object} order -  The full order object
 	*/
 
-	addCustInfo: (game, name, address, phone) => {
-		game.customerName = name;
-		game.customerAddress = address;
-		game.customerPhone = phone;
-		return game;
+	addCustInfo: (order, name, address, phone) => {
+		order.customerName = name;
+		order.customerAddress = address;
+		order.customerPhone = phone;
+		return order;
+	},
+
+	/**
+	* addItem
+	* Attempts to add an item to the order
+	*
+	* @param {string} order - The full order object
+	* @param {array} item - The item being added
+	* @returns {object} order -  The full order object
+	*/
+	addItem: (order, item) => {
+		order.items.push(item);
+		return order;
 	}
 
 };
