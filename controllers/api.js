@@ -1,12 +1,10 @@
 "use strict";
 
 const config = require("../config.json");
-
 const parse = require("co-body");
-
 const db = require("../helpers/db");
-
 const orderModel = require("../models/order");
+const itemModel = require("../models/item");
 
 /**
 * newOrder
@@ -94,18 +92,32 @@ module.exports.getAllItems = function* getAllItems() {
 
 module.exports.addItem = function* addItem() {
 	const params = this.request.body;
-	if (!params.item && !params.order) {
+	if (!params.item && !this.session.id) {
 		this.status = 400;
-		return this.body = {error: true, message: "Must include an item"};
-	}
-	params.order.items.push(params.item);
-
-	// save order to db
-	const result = yield db.saveOrder(params.order);
-	if (result.error === true) {
-		this.status = 400;
-		return this.body = {error: true, message: order.message};
+		return this.body = {error: true, message: "Must include an item, and the orderID"};
 	}
 
-	return this.body = result;
+	let order = yield db.getOrder(this.session.id);
+	if (order.error === true) {
+		// something went wrong during load
+		console.log("Something went wrong getting the order");
+		return order;
+	}
+
+	const item = params.item;
+	order = orderModel.addItem(order, item);
+	if (order.error === true) {
+		// something went wrong during adding item
+		console.log("Something went wrong during adding");
+		return order;
+	}
+
+	order = yield db.saveOrder(order);
+	if (order.error === true) {
+		// something went wrong during saving
+		console.log("Something went wrong saving the order");
+		return order;
+	}
+
+	return this.body = order;
 };
