@@ -11,7 +11,7 @@ describe("Order Model - New Order", () => {
 	before(() => {
 		order = orderModel.newOrder("colville", "delivery");
 		item = itemModel.newItem("name", "cat", "desc", "price");
-		orderModel.addItem(item);
+		orderModel.addItem(order, item);
 	});
 
 	it("order should be a valid object", (done) => {
