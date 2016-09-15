@@ -16,7 +16,7 @@ describe("Item Model - New Item", () => {
 		return done();
 	});
 
-	it("order should have required properties", (done) => {
+	it("item should have required properties", (done) => {
 		expect(item).to.have.property("error");
 		expect(item).to.have.property("name");
 		expect(item).to.have.property("category");
@@ -29,10 +29,9 @@ describe("Item Model - New Item", () => {
 	it("item should have the correct starting values", (done) => {
 		expect(item.error).to.be.a("boolean");
 		expect(item.error).to.equal(false);
-		// TODO: This should be a guid with length of 36 - 32 chars 4 dashes
 		expect(item.name).to.be.a("string");
 		expect(item.name).to.equal("name");
-		// This will be what it is, like pizza, or breadsticks.
+		// Is this an appetizer? main meal? what are we?
 		expect(item.category).to.be.a("string");
 		expect(item.category).to.equal("category");
 		// explanation of what it is exactly
