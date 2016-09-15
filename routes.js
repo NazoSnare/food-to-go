@@ -27,10 +27,12 @@ routes.post("/api/getOrder", api.getOrder);
 routes.post("/api/info", api.saveInfo);
 routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
+routes.post("/api/getCategory", store.getCategory);
 
 // get info back for store end
 routes.post("/store/retrieve", store.getOrders);
 routes.post("/store/items/add", store.newItem);
+routes.post("/store/newCat", store.newCategory);
 // for passport
 routes.get("/login", account.login);
 routes.get("/logout", account.logout);

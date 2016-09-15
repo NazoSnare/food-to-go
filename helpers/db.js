@@ -115,3 +115,32 @@ exports.getAllItems = function* getAllItems() {
 		};
 	}
 };
+
+exports.getCategory = function* getCategory(id) {
+	try {
+		const db = connectToDatabase("categories");
+		const doc = yield db.getAsync(id);
+		doc.error = false;
+		return doc;
+	} catch (err) {
+		return {
+			error: true,
+			message: "DB: There is no categories with that ID."
+		};
+	}
+};
+
+exports.saveCategory = function* saveCategory(document) {
+	try {
+		const db = connectToDatabase("categories");
+		const returnVal = yield db.saveAsync(document.id, document);
+		document.id = returnVal.id;
+		document.error = false;
+		return document;
+	} catch (err) {
+		return {
+			error: true,
+			message: `DB: Save of [${document.id}] failed`
+		};
+	}
+};
