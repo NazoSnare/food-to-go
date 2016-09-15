@@ -4,6 +4,7 @@ const config = require("../config.json");
 const parse = require("co-body");
 const db = require("../helpers/db");
 const itemModel = require("../models/item");
+const catModel = require("../models/categories");
 
 // Below are the GET routes for the store end
 
@@ -46,13 +47,44 @@ module.exports.newItem = function* newItem() {
 	const item = itemModel.newItem(params.name, params.cat, params.desc, params.price);
 	if (item.error === true) {
 		this.status = 400;
-		return this.body = {error: true, message: order.message};
+		return this.body = {error: true, message: item.message};
 	}
 
 	const result = yield db.saveItem(item);
 	if (result.error === true) {
 		this.status = 400;
-		return this.body = {error: true, message: order.message};
+		return this.body = {error: true, message: result.message};
 	}
 	return this.body = result;
+};
+
+module.exports.newCategory = function* newCategory(id) {
+	const params = this.request.body;
+	if (!params.id) {
+		this.status = 400;
+		return this.body = {error: true, message: "Must include an order id."};
+	}
+
+	const category = catModel.newCategory(params.id);
+	if (category.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: category.message};
+	}
+
+	const result = yield db.saveCategory(id);
+	if (result.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: result.message};
+	}
+	return this.body = result;
+};
+
+module.exports.getCategory = function* getCategory(id) {
+
+	const category = yield db.getCategory();
+	if (category.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: category.message};
+	}
+	return this.body = item;
 };
