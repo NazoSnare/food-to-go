@@ -14,5 +14,6 @@ module.exports = {
 			storeAccount: false,
 			authLevel: 0
 		};
+		return user;
 	}
 };
