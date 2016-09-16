@@ -8,7 +8,9 @@ module.exports = {
 		const user = {
 			id: chance.hammertime(),
 			username: username,
-			password: password
+			password: password,
+			// is this an account for the store or consumers?
+			storeAccount: false
 		};
 	}
 };
