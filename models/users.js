@@ -12,7 +12,7 @@ module.exports = {
 			password: password,
 			// is this an account for the store or consumers?
 			storeAccount: false,
-			authLevel: 0
+			authLevel: level
 		};
 		return user;
 	}
