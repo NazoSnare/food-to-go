@@ -7,7 +7,7 @@ module.exports = {
 	newUser: (username, password, level) => {
 		const user = {
 			error: false,
-			id: chance.hammertime(),
+			id: chance.guid(),
 			username: username,
 			password: password,
 			// is this an account for the store or consumers?
