@@ -37,9 +37,9 @@ describe("User Model - New User", () => {
 		expect(user.password).to.be.a("string");
 		expect(user.password).to.equal("password");
 		expect(user.storeAccount).to.be.a("boolean");
-		expect(order.storeAccount).to.equal(false);
-		expect(order.level).to.be.a("number");
-		expect(order.level).to.equal(99);
+		expect(user.storeAccount).to.equal(false);
+		expect(user.level).to.be.a("number");
+		expect(user.level).to.equal(99);
 		return done();
 	});
 });
