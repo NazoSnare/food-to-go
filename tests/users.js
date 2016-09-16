@@ -7,7 +7,7 @@ let user;
 
 describe("User Model - New User", () => {
 	before(() => {
-		order = userModel.newUser("name", "password", 99);
+		user = userModel.newUser("name", "password", 99);
 	});
 
 	it("user should be a valid object", (done) => {
