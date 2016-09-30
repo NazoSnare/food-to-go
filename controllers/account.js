@@ -26,3 +26,6 @@ module.exports.index = function* index() {
 	}
 	yield this.render("account", {title: config.site.name, user: JSON.stringify(user, null, 2)});
 };
+module.exports.loginError = function* loginError() {
+	yield this.render("login_error");
+};

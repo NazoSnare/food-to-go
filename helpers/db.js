@@ -144,3 +144,17 @@ exports.saveCategory = function* saveCategory(document) {
 		};
 	}
 };
+
+exports.checkUser = function* checkUser(id) {
+	try {
+		const db = connectToDatabase("users");
+		const doc = yield db.getAsync(id);
+		doc.error = false;
+		return doc;
+	} catch (err) {
+		return {
+			error: true,
+			message: "DB: There is no users with that ID."
+		};
+	}
+};

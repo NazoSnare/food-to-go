@@ -2,6 +2,7 @@
 
 const Chance = require("chance");
 const chance = new Chance();
+const db = require("../helpers/db");
 
 module.exports = {
 	newUser: (username, password, level) => {
@@ -15,5 +16,10 @@ module.exports = {
 			authLevel: level
 		};
 		return user;
+	},
+
+	getUser: function* getUser(username) {
+		const document = yield db.checkUser(username);
+		return document;
 	}
 };

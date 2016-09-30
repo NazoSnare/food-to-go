@@ -37,6 +37,7 @@ routes.post("/store/newCat", store.newCategory);
 routes.get("/login", account.login);
 routes.get("/logout", account.logout);
 routes.get("/account", account.index);
+routes.get("/login_error", account.loginError);
 
 // you can add as many strategies as you want
 routes.get("/auth/github",
@@ -47,6 +48,14 @@ routes.get("/auth/github/callback",
 	passport.authenticate("github", {
 		successRedirect: "/account",
 		failureRedirect: "/"
+	})
+);
+
+routes.post("/auth/local",
+	passport.authenticate("local", {
+		successRedirect: "/account",
+		failureRedirect: "/login_error",
+		failureFlash: true
 	})
 );
 

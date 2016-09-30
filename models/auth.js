@@ -3,6 +3,7 @@
 const passport = require("../index.js").passport;
 const config = require("../config.json");
 const co = require("co");
+const userModel = require("../models/users");
 
 passport.serializeUser((user, done) => {
 	done(null, user);
@@ -26,7 +27,26 @@ passport.use(new GithubStrategy({
 	// retrieve user ...
 	co(function* auth() {
 		// do some async/yield stuff here to get/set profile data
-		done(null, profile);
+		yield done(null, profile);
+	}).catch(function onError(e) {
+		console.error("Something went terribly wrong!");
+		console.error(e.stack);
+		done(e, null);
+	});
+}));
+
+const LocalStrategy = require("passport-local").Strategy;
+passport.use(new LocalStrategy((username, password, done) => {
+	co(function* auth() {
+		const user = yield userModel.getUser(username);
+		if (user.error === true) {
+			done(null, false);
+		}
+		if (password === user.password) {
+			done(null, user);
+		} else {
+			done(null, false);
+		}
 	}).catch(function onError(e) {
 		console.error("Something went terribly wrong!");
 		console.error(e.stack);
