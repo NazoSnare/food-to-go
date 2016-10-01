@@ -55,7 +55,6 @@ routes.post("/auth/local",
 	passport.authenticate("local", {
 		successRedirect: "/account",
 		failureRedirect: "/login_error",
-		failureFlash: true
 	})
 );
 
