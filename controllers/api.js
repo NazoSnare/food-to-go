@@ -24,7 +24,7 @@ module.exports.newOrder = function* newOrder() {
 	}
 
 	// save order to db
-	const result = yield db.saveOrder(order);
+	const result = yield db.saveDocument(order, "orders");
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
@@ -46,7 +46,7 @@ module.exports.getOrder = function* getOrder() {
 		return this.body = {error: true, message: "Must include orderID"};
 	}
 
-	const order = yield db.getOrder(this.session.id);
+	const order = yield db.getDocument(this.session.id, "orders");
 	if (order.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
@@ -68,7 +68,7 @@ module.exports.saveInfo = function* saveInfo() {
 		return this.body = {error: true, message: order.message};
 	}
 
-	const result = yield db.saveOrder(order);
+	const result = yield db.saveDocument(order, "orders");
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
@@ -102,7 +102,7 @@ module.exports.addItem = function* addItem() {
 		return this.body = {error: true, message: "Can't add an empty item"};
 	}
 
-	let order = yield db.getOrder(this.session.id);
+	let order = yield db.getDocument(this.session.id, "orders");
 	if (order.error === true) {
 		// something went wrong during load
 		console.log("Something went wrong getting the order");
@@ -117,7 +117,7 @@ module.exports.addItem = function* addItem() {
 		return order;
 	}
 
-	order = yield db.saveOrder(order);
+	order = yield db.saveDocument(order, "orders");
 	if (order.error === true) {
 		// something went wrong during saving
 		console.log("Something went wrong saving the order");
