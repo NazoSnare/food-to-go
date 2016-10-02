@@ -50,7 +50,7 @@ module.exports.newItem = function* newItem() {
 		return this.body = {error: true, message: item.message};
 	}
 
-	const result = yield db.saveItem(item);
+	const result = yield db.saveDocument(item, "items");
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: result.message};
@@ -71,7 +71,7 @@ module.exports.newCategory = function* newCategory(id) {
 		return this.body = {error: true, message: category.message};
 	}
 
-	const result = yield db.saveCategory(id);
+	const result = yield db.saveDocument(id, "categories");
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: result.message};
@@ -81,7 +81,7 @@ module.exports.newCategory = function* newCategory(id) {
 
 module.exports.getCategory = function* getCategory(id) {
 
-	const category = yield db.getCategory();
+	const category = yield db.getDocument(id, "categories");
 	if (category.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: category.message};

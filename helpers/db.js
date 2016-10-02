@@ -23,9 +23,9 @@ const connectToDatabase = (dbName) => {
 // This is for the orders!
 
 // Grabs an order document from the database in CouchDB.
-exports.getOrder = function* getOrder(id) {
+exports.getDocument = function* getDocument(id, database) {
 	try {
-		const db = connectToDatabase("orders");
+		const db = connectToDatabase(database);
 		const doc = yield db.getAsync(id);
 		doc.error = false;
 		return doc;
@@ -38,25 +38,9 @@ exports.getOrder = function* getOrder(id) {
 };
 
 // Saves an order document in the database in CouchDB.
-exports.saveOrder = function* saveOrder(document) {
+exports.saveDocument = function* saveDocument(document, database) {
 	try {
-		const db = connectToDatabase("orders");
-		const returnVal = yield db.saveAsync(document.id, document);
-		document.id = returnVal.id;
-		document.error = false;
-		return document;
-	} catch (err) {
-		return {
-			error: true,
-			message: `DB: Save of [${document.id}] failed`
-		};
-	}
-};
-
-// Saves an order document in the database in CouchDB.
-exports.saveItem = function* saveItem(document) {
-	try {
-		const db = connectToDatabase("items");
+		const db = connectToDatabase(database);
 		const returnVal = yield db.saveAsync(document.id, document);
 		document.id = returnVal.id;
 		document.error = false;
@@ -70,9 +54,9 @@ exports.saveItem = function* saveItem(document) {
 };
 
 // Removes an order document in the database in CouchDB.
-exports.removeOrder = function* removeOrder(id) {
+exports.removeDocument = function* removeDocument(id, database) {
 	try {
-		const db = connectToDatabase("orders");
+		const db = connectToDatabase(database);
 		const returnVal = yield db.removeAsync(id);
 		returnVal.error = false;
 		return returnVal;
@@ -112,49 +96,6 @@ exports.getAllItems = function* getAllItems() {
 		return {
 			error: true,
 			message: "DB: Get of all item docs failed"
-		};
-	}
-};
-
-exports.getCategory = function* getCategory(id) {
-	try {
-		const db = connectToDatabase("categories");
-		const doc = yield db.getAsync(id);
-		doc.error = false;
-		return doc;
-	} catch (err) {
-		return {
-			error: true,
-			message: "DB: There is no categories with that ID."
-		};
-	}
-};
-
-exports.saveCategory = function* saveCategory(document) {
-	try {
-		const db = connectToDatabase("categories");
-		const returnVal = yield db.saveAsync(document.id, document);
-		document.id = returnVal.id;
-		document.error = false;
-		return document;
-	} catch (err) {
-		return {
-			error: true,
-			message: `DB: Save of [${document.id}] failed`
-		};
-	}
-};
-
-exports.checkUser = function* checkUser(id) {
-	try {
-		const db = connectToDatabase("users");
-		const doc = yield db.getAsync(id);
-		doc.error = false;
-		return doc;
-	} catch (err) {
-		return {
-			error: true,
-			message: "DB: There is no users with that ID."
 		};
 	}
 };
