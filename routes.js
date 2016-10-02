@@ -33,6 +33,8 @@ routes.post("/api/getCategory", store.getCategory);
 routes.post("/store/retrieve", store.getOrders);
 routes.post("/store/items/add", store.newItem);
 routes.post("/store/newCat", store.newCategory);
+routes.post("/store/admin", store.admin);
+routes.post("store/addUser", store.addUser);
 // for passport
 routes.get("/login", account.login);
 routes.get("/logout", account.logout);

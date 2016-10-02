@@ -24,6 +24,20 @@ module.exports.add = function* add() {
 	});
 };
 
+module.exports.admin = function* admin() {
+	yield this.render("store/admin", {
+		title: config.site.name,
+		script: "store/admin"
+	});
+};
+
+module.exports.addUser = function* addUser() {
+	yield this.render("store/addUser", {
+		title: config.site.name,
+		script: "store.addUser"
+	});
+};
+
 // Below are the POST routes for the store end
 
 // Get all the orders from the db and show to the store
