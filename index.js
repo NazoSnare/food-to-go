@@ -5,6 +5,7 @@ const config = require("./config.json");
 const koa = require("koa");
 const hbs = require("koa-hbs");
 const serve = require("koa-static-folder");
+const cors = require("koa-cors");
 
 // for passport support
 const session = require("koa-generic-session");
@@ -12,6 +13,7 @@ const bodyParser = require("koa-bodyparser");
 const passport = require("koa-passport");
 
 const app = koa();
+app.use(cors());
 
 exports.app = app;
 exports.passport = passport;

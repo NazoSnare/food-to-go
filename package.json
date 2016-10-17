@@ -1,28 +1,29 @@
 {
-  "name": "PizzaGO",
+  "name": "Food-to-go",
   "version": "1.0.0",
-  "description": "A website to order pizza online!",
+  "description": "A website to order food online!",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "./node_modules/.bin/nodemon -e js,hbs index.js",
+    "webserver": "node index.js",
     "test": "./node_modules/.bin/mocha ./tests/ && ./node_modules/.bin/eslint .",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cynical89/PizzaGO.git"
+    "url": "git+https://github.com/cynical89/food-to-go.git"
   },
   "keywords": [
     "koa",
-    "pizza",
+    "food",
     "handlebars"
   ],
   "author": "cynical89 (@cynical89)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cynical89/PizzaGO/issues"
+    "url": "https://github.com/cynical89/food-to-go/issues"
   },
-  "homepage": "https://github.com/cynical89/PizzaGO#readme",
+  "homepage": "https://github.com/cynical89/food-to-go#readme",
   "dependencies": {
     "bcrypt": "^0.8.7",
     "bluebird": "^3.4.1",
@@ -32,6 +33,7 @@
     "guid": "0.0.12",
     "koa": "^1.1.2",
     "koa-bodyparser": "^2.0.1",
+    "koa-cors": "0.0.16",
     "koa-generic-session": "^1.10.0",
     "koa-hbs": "^0.7.0",
     "koa-passport": "^1.2.0",
@@ -47,6 +49,7 @@
     "eslint": "^3.2.2",
     "istanbul": "^0.4.4",
     "mocha": "^3.0.0",
+    "nodemon": "^1.11.0",
     "shipit-cli": "^1.4.1",
     "shipit-deploy": "^2.1.2"
   }
