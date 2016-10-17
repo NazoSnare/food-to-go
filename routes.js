@@ -12,6 +12,7 @@ const main = require("./controllers/main.js");
 const account = require("./controllers/account.js");
 const api = require("./controllers/api.js");
 const store = require("./controllers/store.js");
+const storeapi = require("./controllers/storeapi.js");
 
 // routes
 
@@ -28,6 +29,11 @@ routes.post("/api/info", api.saveInfo);
 routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
 routes.post("/api/getCategory", store.getCategory);
+
+// for remote api
+routes.get("/api/success", storeapi.success);
+routes.get("/api/failure", storeapi.failure);
+
 
 // get info back for store end
 routes.post("/store/retrieve", store.getOrders);
@@ -59,5 +65,13 @@ routes.post("/auth/local",
 		failureRedirect: "/login_error"
 	})
 );
+
+routes.post("/api/login/local",
+	passport.authenticate("local", {
+		successRedirect: "/api/success",
+		failureRedirect: "/api/failure"
+	})
+);
+
 
 app.use(routes.middleware());

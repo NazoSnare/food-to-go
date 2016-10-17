@@ -19,7 +19,7 @@ module.exports = {
 	},
 
 	getUser: function* getUser(username) {
-		const document = yield db.checkUser(username);
+		const document = yield db.getDocument(username, "ftgusers");
 		return document;
 	}
 };
