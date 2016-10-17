@@ -11,7 +11,7 @@ A great way to order your food online!
 
 * Clone down the repository.
 ```
-git clone https://github.com/cynical89/PizzaGO.git
+git clone https://github.com/cynical89/food-to-go.git
 ```
 
 * Install packages (from inside the food-to-go folder).
