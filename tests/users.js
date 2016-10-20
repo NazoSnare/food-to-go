@@ -29,7 +29,6 @@ describe("User Model - New User", () => {
 	it("user should have the correct starting values", (done) => {
 		expect(user.error).to.be.a("boolean");
 		expect(user.error).to.equal(false);
-		// guid with length of 36 - 32 chars 4 dashes
 		expect(user.id).to.be.a("string");
 		expect(user.id).to.equal("name");
 		expect(user.username).to.be.a("string");
