@@ -41,8 +41,9 @@ passport.use(new LocalStrategy((username, password, done) => {
 		const user = yield userModel.getUser(username, password);
 		if (user.error === true) {
 			done(null, false);
+		} else {
+			done(null, user);
 		}
-		done(null, user);
 	}).catch(function onError(e) {
 		console.error("Something went terribly wrong!");
 		console.error(e.stack);
