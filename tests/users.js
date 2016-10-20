@@ -31,7 +31,7 @@ describe("User Model - New User", () => {
 		expect(user.error).to.equal(false);
 		// guid with length of 36 - 32 chars 4 dashes
 		expect(user.id).to.be.a("string");
-		expect(user.id.length).to.equal(36);
+		expect(user.id).to.equal("name");
 		expect(user.username).to.be.a("string");
 		expect(user.username).to.equal("name");
 		expect(user.password).to.be.a("string");
