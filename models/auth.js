@@ -38,15 +38,11 @@ passport.use(new GithubStrategy({
 const LocalStrategy = require("passport-local").Strategy;
 passport.use(new LocalStrategy((username, password, done) => {
 	co(function* auth() {
-		const user = yield userModel.getUser(username);
+		const user = yield userModel.getUser(username, password);
 		if (user.error === true) {
 			done(null, false);
 		}
-		if (password === user.password) {
-			done(null, user);
-		} else {
-			done(null, false);
-		}
+		done(null, user);
 	}).catch(function onError(e) {
 		console.error("Something went terribly wrong!");
 		console.error(e.stack);

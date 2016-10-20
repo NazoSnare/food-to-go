@@ -7,7 +7,7 @@ let user;
 
 describe("User Model - New User", () => {
 	before(() => {
-		user = userModel.newUser("name", "password", 99);
+		user = userModel.newUser("name", "ftgdefault", 99);
 	});
 
 	it("user should be a valid object", (done) => {
@@ -34,7 +34,7 @@ describe("User Model - New User", () => {
 		expect(user.username).to.be.a("string");
 		expect(user.username).to.equal("name");
 		expect(user.password).to.be.a("string");
-		expect(user.password).to.equal("password");
+		expect(user.password.length).to.equal(60);
 		expect(user.storeAccount).to.be.a("boolean");
 		expect(user.storeAccount).to.equal(false);
 		expect(user.authLevel).to.be.a("number");
