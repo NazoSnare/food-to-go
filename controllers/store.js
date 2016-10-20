@@ -5,6 +5,7 @@ const parse = require("co-body");
 const db = require("../helpers/db");
 const itemModel = require("../models/item");
 const catModel = require("../models/categories");
+const userModel = require("../models/users");
 
 // Below are the GET routes for the store end
 
@@ -31,16 +32,27 @@ module.exports.admin = function* admin() {
 	});
 };
 
-module.exports.addUser = function* addUser() {
-	yield this.render("store/addUser", {
-		title: config.site.name,
-		script: "store.addUser"
-	});
-};
-
 // Below are the POST routes for the store end
 
 // Get all the orders from the db and show to the store
+module.exports.addUser = function* addUser() {
+	const params = this.request.body;
+	if (!params.username) {
+		this.throw(400, "You need to provide a username for this user");
+	}
+	if (!params.password) {
+		this.throw(400, "You need to provide a password for this user");
+	}
+	if (!params.username) {
+		this.throw(400, "You need to provide a level for this user");
+	}
+	const user = yield userModel.newUser(params.username, params.password, params.level);
+	if (user.error === true) {
+		this.throw(500, "Something has gone awry!");
+	}
+	return this.body = user;
+};
+
 module.exports.getOrders = function* getOrders() {
 	const order = yield db.getAllOrders();
 	if (order.error === true) {
