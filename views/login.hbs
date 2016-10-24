@@ -1,29 +1,27 @@
-<div class="container row">
+<div class="container">
 
-	<div class="col-md-6">
+	<div class="col-md-8 col-md-offset-4">
 
-	    <h1><span class="fa fa-sign-in"></span> Login</h1>
-	    <!-- LOGIN FORM -->
-	    <form action="/auth/local" method="post">
-	        <div class="form-group">
-	            <label>Username</label>
-	            <input type="text" class="form-control" name="username">
-	        </div>
-	        <div class="form-group">
-	            <label>Password</label>
-	            <input type="password" class="form-control" name="password">
-	        </div>
-
-	        <button type="submit" class="btn btn-block btn-lg btn-primary">Login</button>
-	    </form>
-
-	</div>
-	<h1>Login</h1>
-	<div class="col-md-6">
-		<a class="btn btn-block btn-social btn-lg btn-github" href="/auth/github">
-			<span class="fa fa-github"></span>
-			Sign in with Github
-		</a>
+		<h1><span class="fa fa-sign-in"></span> Login</h1>
+		<br>
+		<p class="lead">Use one of the serives below!</p>
+		<div class="col-md-6">
+			<a class="btn btn-block btn-social btn-lg btn-google" href="/auth/google">
+				<span class="fa fa-google"></span>
+				Sign in with Google
+			</a>
+			<a class="btn btn-block btn-social btn-lg btn-reddit" href="/auth/reddit">
+				<span class="fa fa-reddit"></span>
+				Sign in with Reddit
+			</a>
+			<a class="btn btn-block btn-social btn-lg btn-facebook" href="/auth/facebook">
+				<span class="fa fa-facebook"></span>
+				Sign in with Facebook
+			</a>
+			<a class="btn btn-block btn-social btn-lg btn-github" href="/auth/github">
+				<span class="fa fa-github"></span>
+				Sign in with Github
+			</a>
 	</div>
 
 </div><!-- /.container -->
