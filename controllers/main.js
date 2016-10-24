@@ -10,14 +10,17 @@ module.exports.index = function* index() {
 	}
 	yield this.render("index", {
 		title: config.site.name,
-		user: user,
-		script: "index"
+		user: user
 	});
 };
 
 module.exports.ordering = function* ordering() {
+	if (this.isAuthenticated()) {
+		user = this.session.passport.user;
+	}
 	yield this.render("ordering", {
 		title: config.site.name,
-		script: "ordering"
+		script: "ordering",
+		user: user
 	});
 };

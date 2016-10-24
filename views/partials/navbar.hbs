@@ -10,6 +10,15 @@
 			<a class="navbar-brand" href="/">{{get_name}}</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left">
+				<li><a href="/">Home</a></li>
+				<li><a href="#">Menu</a></li>
+				{{#if order}}
+				<li><a href="#">Cart</a></li>
+				{{else}}
+				<li><a href="/ordering">Start Order</a></li>
+				{{/if}}
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				{{#if user}}
 					<li><a href="/settings">Account</a></li>
