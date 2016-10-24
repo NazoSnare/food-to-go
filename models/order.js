@@ -18,15 +18,15 @@ module.exports = {
 	* @returns {object} order -  The full order object
 	*/
 
-	newOrder: (location, method) => {
+	newOrder: () => {
 		const order = {
 			error: false,
 			id: chance.guid(),
 			dateTime: new Date(),
 			status: "preparing",
 			state: "in-progress",
-			location: location,
-			method: method,
+			location: "store#",
+			method: "delivery",
 			customerName: "name",
 			customerAddress: "address",
 			customerPhone: "123-456-7890",
