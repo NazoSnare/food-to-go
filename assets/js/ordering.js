@@ -6,7 +6,6 @@ var checked;
 
 $( document ).ready(function() {
 	hideAll();
-	getOrder();
 
 		$("#content").on("change", "input", function() {
 			$("input.checkbox").not(this).prop('checked', false);
@@ -93,34 +92,6 @@ $( document ).ready(function() {
 function hideAll() {
 	$("#one").hide();
 	$("#two").hide();
-}
-
-function getOrder() {
-
-	$.ajax({
-		type: "POST",
-		dataType: "json",
-		url: "/api/getOrder",
-	}).done(function(result) {
-		if (result.error === true) {
-			alert(result.message);
-			console.log(orderID);
-			return console.error(result.message);
-		}
-		// do something with the success, like show a link
-		order = result;
-		console.log(order);
-		if(order.method === "carryout") {
-			$("#deliveryInfo").hide();
-			$("#one").show();
-			getAllItems();
-		}
-
-	}).fail(function(err) {
-		// do something with the failure, like laugh at the user
-		window.alert("No order with that id");
-		console.error(err);
- });
 }
 
 function getAllItems() {

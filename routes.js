@@ -25,8 +25,6 @@ routes.get("/store/admin", store.admin);
 routes.get("/store/add/user", store.addUserPage);
 
 // get info back for consumer end
-routes.post("/api/order", api.newOrder);
-routes.post("/api/getOrder", api.getOrder);
 routes.post("/api/info", api.saveInfo);
 routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
@@ -49,6 +47,7 @@ routes.get("/account", account.index);
 routes.get("/login_error", account.loginError);
 
 // you can add as many strategies as you want
+// TODO: Add google, reddit, and facebook strategies!
 routes.get("/auth/github",
 	passport.authenticate("github")
 );
