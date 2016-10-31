@@ -57,24 +57,33 @@ module.exports.getOrder = function* getOrder() {
 
 module.exports.saveInfo = function* saveInfo() {
 	const params = this.request.body;
-	if (!params.order && params.name && params.address && params.phone) {
+	if (!params.name && !params.address && !params.phone) {
 		this.status = 400;
 		return this.body = {error: true, message: "Must include name address and phone number!"};
 	}
 
-	const order = orderModel.addCustInfo(params.order, params.customerName, params.customerAddress, params.customerPhone);
+	const order = yield orderModel.newOrder();
 	if (order.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
 	}
 
-	const result = yield db.saveDocument(order, "orders");
+	const result = yield orderModel.addCustInfo(order, params.customerName, params.customerAddress, params.customerPhone);
+	if (order.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: order.message};
+	}
+
+	const document = yield db.saveDocument(order, "orders");
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
 	}
 
-	return this.body = result;
+	// save id to session.
+	this.session.id = order.id;
+
+	return this.body = document;
 
 };
 
@@ -84,7 +93,7 @@ module.exports.getAllItems = function* getAllItems() {
 	const item = yield db.getAllItems();
 	if (item.error === true) {
 		this.status = 400;
-		return this.body = {error: true, message: order.message};
+		return this.body = {error: true, message: item.message};
 	}
 
 	return this.body = item;

@@ -9,7 +9,7 @@ let item;
 
 describe("Order Model - New Order", () => {
 	before(() => {
-		order = orderModel.newOrder("colville", "delivery");
+		order = orderModel.newOrder();
 		item = itemModel.newItem("name", "cat", "desc", "price");
 		orderModel.addItem(order, item);
 	});
@@ -47,7 +47,7 @@ describe("Order Model - New Order", () => {
 		expect(order.state).to.be.a("string");
 		expect(order.state).to.equal("in-progress");
 		expect(order.location).to.be.a("string");
-		expect(order.location).to.equal("colville");
+		expect(order.location).to.equal("store#");
 		expect(order.method).to.be.a("string");
 		expect(order.method).to.equal("delivery");
 		expect(order.customerName).to.be.a("string");

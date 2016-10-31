@@ -8,7 +8,7 @@ module.exports.success = function* success() {
 	if (this.isAuthenticated()) {
 		user = this.session.passport.user;
 	}
-	yield this.body = {error: false, user_id: user.id, username: user.username};
+	yield this.body = JSON.stringify(user, null, 2);
 };
 
 module.exports.failure = function* failure() {

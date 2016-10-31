@@ -8,28 +8,61 @@ const catModel = require("../models/categories");
 const userModel = require("../models/users");
 
 // Below are the GET routes for the store end
+module.exports.storeLogin = function* storeLogin() {
+	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+		return this.redirect("/store/store");
+	}
+	yield this.render("store/storeLogin", {
+		title: config.site.name,
+		script: "store/storeLogin"
+	});
+};
 
 // Show the store view
 module.exports.store = function* store() {
-	yield this.render("store/store", {
-		title: config.site.name,
-		script: "store/store"
-	});
+	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+		yield this.render("store/store", {
+			title: config.site.name,
+			script: "store/store"
+		});
+	} else {
+		return this.redirect("/");
+	}
 };
 
 // Show the add item view
-module.exports.add = function* add() {
-	yield this.render("store/add", {
-		title: config.site.name,
-		script: "store/addItem"
-	});
+module.exports.addItemPage = function* addItemPage() {
+	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+		yield this.render("store/add", {
+			title: config.site.name,
+			script: "store/addItem"
+		});
+	} else {
+		return this.redirect("/");
+	}
 };
 
 module.exports.admin = function* admin() {
-	yield this.render("store/admin", {
-		title: config.site.name,
-		script: "store/admin"
-	});
+	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+		yield this.render("store/admin", {
+			title: config.site.name,
+			script: "store/admin"
+		});
+	} else {
+		return this.redirect("/");
+	}
+};
+
+// Show the add item view
+module.exports.addUserPage = function* addUserPage() {
+	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+		yield this.render("store/addUser", {
+			title: config.site.name,
+			script: "store/addUser"
+		});
+	} else {
+		return this.redirect("/");
+	}
 };
 
 // Below are the POST routes for the store end
