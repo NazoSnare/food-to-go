@@ -24,3 +24,9 @@ module.exports.ordering = function* ordering() {
 		user: user
 	});
 };
+
+module.exports.cart = function* cart() {
+	yield this.render("payment/payment", {
+		script: "payment/payment"
+	});
+};

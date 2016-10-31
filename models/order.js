@@ -30,7 +30,8 @@ module.exports = {
 			customerName: "name",
 			customerAddress: "address",
 			customerPhone: "123-456-7890",
-			items: []
+			items: [],
+			paymentID: "0000"
 		};
 
 		return order;
@@ -64,6 +65,20 @@ module.exports = {
 	*/
 	addItem: (order, item) => {
 		order.items.push(item);
+		return order;
+	},
+
+	/**
+	* addPaymentID
+	* Attempts to add the payment ID to the order
+	*
+	* @param {string} order - The full order object
+	* @param {string} id - The id of the payment transaction
+	* @returns {object} order -  The full order object
+	*/
+	addPaymentID: (order, id) => {
+		// add the id here
+		order.paymentID = id;
 		return order;
 	}
 

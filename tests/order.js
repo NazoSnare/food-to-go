@@ -10,8 +10,6 @@ let item;
 describe("Order Model - New Order", () => {
 	before(() => {
 		order = orderModel.newOrder("colville", "delivery");
-		item = itemModel.newItem("name", "cat", "desc", "price");
-		orderModel.addItem(order, item);
 	});
 
 	it("order should be a valid object", (done) => {
@@ -32,6 +30,7 @@ describe("Order Model - New Order", () => {
 		expect(order).to.have.property("customerAddress");
 		expect(order).to.have.property("customerPhone");
 		expect(order).to.have.property("items");
+		expect(order).to.have.property("paymentID");
 		return done();
 	});
 
@@ -58,10 +57,57 @@ describe("Order Model - New Order", () => {
 		expect(order.customerPhone).to.equal("123-456-7890");
 		// should be and Array[1]
 		expect(order.items).to.be.an("array");
+		expect(order.items.length).to.equal(0);
+		expect(order.paymentID).to.be.a("string");
+		expect(order.paymentID).to.equal("0000");
+
+		return done();
+	});
+});
+
+describe("Order Model - Add Item", () => {
+	before(() => {
+		item = itemModel.newItem("name", "cat", "desc", 24.99);
+		orderModel.addItem(order, item);
+	});
+
+	it("order should contain the new item", (done) => {
+		expect(order.items).to.be.an("array");
 		expect(order.items.length).to.equal(1);
 		// array item should be an object
 		expect(order.items[0]).to.be.an("object");
+		return done();
+	});
 
+	it("the order's new item should contain default properties", (done) => {
+		expect(order.items[0]).to.have.property("name");
+		expect(order.items[0]).to.have.property("category");
+		expect(order.items[0]).to.have.property("description");
+		expect(order.items[0]).to.have.property("price");
+		return done();
+	});
+
+	it("the order's new item should contain default values", (done) => {
+		expect(order.items[0].name).to.be.a("string");
+		expect(order.items[0].name).to.have.equal("name");
+		expect(order.items[0].price).to.be.a("number");
+		expect(order.items[0].price).to.have.equal(24.99);
+		expect(order.items[0].category).to.be.a("string");
+		expect(order.items[0].category).to.have.equal("cat");
+		expect(order.items[0].description).to.be.a("string");
+		expect(order.items[0].description).to.have.equal("desc");
+		return done();
+	});
+});
+
+describe("Order Model - Add Payment ID", () => {
+	before(() => {
+		orderModel.addPaymentID(order, "ch_19Al9DALMluPQKBEB5R4m22E");
+	});
+
+	it("order should contain the new order string", (done) => {
+		expect(order.paymentID).to.be.a("string");
+		expect(order.paymentID).to.equal("ch_19Al9DALMluPQKBEB5R4m22E");
 		return done();
 	});
 });

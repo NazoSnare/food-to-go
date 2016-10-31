@@ -1,10 +1,13 @@
 "use strict";
 
 const config = require("../config.json");
+const stripe = require("../index.js").stripe;
 const parse = require("co-body");
 const db = require("../helpers/db");
 const orderModel = require("../models/order");
 const itemModel = require("../models/item");
+
+let result;
 
 /**
 * newOrder
@@ -57,24 +60,33 @@ module.exports.getOrder = function* getOrder() {
 
 module.exports.saveInfo = function* saveInfo() {
 	const params = this.request.body;
-	if (!params.order && params.name && params.address && params.phone) {
+	if (!params.name && !params.address && !params.phone) {
 		this.status = 400;
 		return this.body = {error: true, message: "Must include name address and phone number!"};
 	}
 
-	const order = orderModel.addCustInfo(params.order, params.customerName, params.customerAddress, params.customerPhone);
+	const order = yield orderModel.newOrder();
 	if (order.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
 	}
 
-	const result = yield db.saveDocument(order, "orders");
+	const result = yield orderModel.addCustInfo(order, params.customerName, params.customerAddress, params.customerPhone);
+	if (order.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: order.message};
+	}
+
+	const document = yield db.saveDocument(order, "orders");
 	if (result.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
 	}
 
-	return this.body = result;
+	// save id to session.
+	this.session.id = order.id;
+
+	return this.body = document;
 
 };
 
@@ -84,7 +96,7 @@ module.exports.getAllItems = function* getAllItems() {
 	const item = yield db.getAllItems();
 	if (item.error === true) {
 		this.status = 400;
-		return this.body = {error: true, message: order.message};
+		return this.body = {error: true, message: item.message};
 	}
 
 	return this.body = item;
@@ -125,4 +137,36 @@ module.exports.addItem = function* addItem() {
 	}
 
 	return this.body = order;
+};
+
+module.exports.payment = function* payment()
+{
+	const params = this.request.body;
+
+	if (!params.stripeToken) {
+		this.throw(400, "Sorry, something has gone awry.");
+	}
+	// TODO: error checking for amount of the order.
+	if (!params.amount) {
+		this.throw(400, "A purchase amount must be supplied.");
+	}
+
+	const charge = stripe.charges.create({
+		amount: (params.amount * 100),
+		currency: "USD",
+		source: params.stripeToken,
+		description: `${config.site.name} order#: ${this.session.id}`
+	}, (err, res) => {
+		if (err && err.type === "StripeCardError") {
+			// The card has been declined
+		}
+		result = res.id;
+	});
+	yield this.render("payment/payment_success", {
+		script: "payment/success"
+	});
+};
+
+module.exports.success = function success() {
+	return this.body = result;
 };
