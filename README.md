@@ -21,6 +21,8 @@ npm install
 
 * Create your config.  There's a `config.json.example` file in the root.  Edit it to include all your values for the site.  Save it as `config.json` and leave it in the root.
 
+* For production you must change the stripe secret_key to your own live secret key in the config.json. view your keys here [https://dashboard.stripe.com/account/apikeys](https://dashboard.stripe.com/account/apikeys)
+
 * If you want to use Google Analytics, set `config.site.analytics` to your Tracking ID and make sure the analytics partial (analytics.hbs) contains the correct Universal Analytics tracking code.  If you don't want to use Google Analytics, remove that property or set it to false.
 
 * Start it up.

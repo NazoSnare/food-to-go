@@ -1,10 +1,13 @@
 "use strict";
 
 const config = require("../config.json");
+const stripe = require("../index.js").stripe;
 const parse = require("co-body");
 const db = require("../helpers/db");
 const orderModel = require("../models/order");
 const itemModel = require("../models/item");
+
+let result;
 
 /**
 * newOrder
@@ -134,4 +137,36 @@ module.exports.addItem = function* addItem() {
 	}
 
 	return this.body = order;
+};
+
+module.exports.payment = function* payment()
+{
+	const params = this.request.body;
+
+	if (!params.stripeToken) {
+		this.throw(400, "Sorry, something has gone awry.");
+	}
+	// TODO: error checking for amount of the order.
+	if (!params.amount) {
+		this.throw(400, "A purchase amount must be supplied.");
+	}
+
+	const charge = stripe.charges.create({
+		amount: (params.amount * 100),
+		currency: "USD",
+		source: params.stripeToken,
+		description: `${config.site.name} order#: ${this.session.id}`
+	}, (err, res) => {
+		if (err && err.type === "StripeCardError") {
+			// The card has been declined
+		}
+		result = res.id;
+	});
+	yield this.render("payment/payment_success", {
+		script: "payment/success"
+	});
+};
+
+module.exports.success = function success() {
+	return this.body = result;
 };

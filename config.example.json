@@ -14,7 +14,7 @@
   },
 	"plugins": {
 		"stripe": {
-			"secret_key": "APIKEY"
+			"secret_key": "STRIPE SECRET KEY"
 		}
 	},
   "deploy":{

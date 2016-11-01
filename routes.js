@@ -20,6 +20,9 @@ const storeapi = require("./controllers/storeapi.js");
 routes.get("/", main.index);
 routes.get("/ordering", main.ordering);
 routes.get("/store", store.store);
+routes.get("/store/add", store.add);
+routes.get("/checkout", main.cart);
+routes.get("/api/success", api.success);
 routes.get("/store/add/item", store.addItemPage);
 routes.get("/store/admin", store.admin);
 routes.get("/store/add/user", store.addUserPage);
@@ -29,6 +32,7 @@ routes.post("/api/info", api.saveInfo);
 routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
 routes.post("/api/getCategory", store.getCategory);
+routes.post("/stripe", api.payment);
 
 // for remote api
 routes.get("/api/success", storeapi.success);
