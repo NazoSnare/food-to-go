@@ -149,7 +149,7 @@ module.exports.payment = function* payment()
 	}
 	const chargeAmount = params.amount * 100;
 
-	const charge = stripe.charges.create({
+	const charge = yield stripe.charges.create({
 		amount: (params.amount * 100),
 		currency: "USD",
 		source: params.stripeToken,
