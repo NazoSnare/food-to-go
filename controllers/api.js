@@ -7,7 +7,7 @@ const db = require("../helpers/db");
 const orderModel = require("../models/order");
 const itemModel = require("../models/item");
 
-let result;
+let pid;
 
 /**
 * newOrder
@@ -160,13 +160,20 @@ module.exports.payment = function* payment()
 		if (err && err.type === "StripeCardError") {
 			// The card has been declined
 		}
-		result = res.id;
+		pid = res.id;
 	});
-	yield this.render("payment/payment_success", {
-		script: "payment/success"
+	yield this.render("payment/processing", {
+		script: "payment/processing"
 	});
 };
 
-module.exports.success = function success() {
-	return this.body = result;
+module.exports.success = function* success() {
+	this.session.pid = pid;
+	if (this.session.pid !== undefined) {
+		yield this.render("payment/payment_success", {
+			id: this.session.pid
+		});
+	} else {
+		this.throw(400, "Something has gone terribly wrong.");
+	}
 };
