@@ -12,7 +12,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
 	done(null, user);
 });
-
+// TODO: Add google, reddit, and facebook strategies!
 const GithubStrategy = require("passport-github").Strategy;
 // if we have a port other than 80, add it to our callback url
 let port = "";

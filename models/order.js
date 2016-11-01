@@ -13,20 +13,18 @@ module.exports = {
 	* newOrder
 	* Creates a new order object and returns it
 	*
-	* @param {string} location - location of the store to send orders to
-	* @param {string} method - delivery or carryout
 	* @returns {object} order -  The full order object
 	*/
 
-	newOrder: (location, method) => {
+	newOrder: () => {
 		const order = {
 			error: false,
 			id: chance.guid(),
 			dateTime: new Date(),
 			status: "preparing",
 			state: "in-progress",
-			location: location,
-			method: method,
+			location: "store#",
+			method: "delivery",
 			customerName: "name",
 			customerAddress: "address",
 			customerPhone: "123-456-7890",

@@ -9,7 +9,7 @@ let item;
 
 describe("Order Model - New Order", () => {
 	before(() => {
-		order = orderModel.newOrder("colville", "delivery");
+		order = orderModel.newOrder();
 	});
 
 	it("order should be a valid object", (done) => {
@@ -37,7 +37,6 @@ describe("Order Model - New Order", () => {
 	it("order should have the correct starting values", (done) => {
 		expect(order.error).to.be.a("boolean");
 		expect(order.error).to.equal(false);
-		// guid with length of 36 - 32 chars 4 dashes
 		expect(order.id).to.be.a("string");
 		expect(order.id.length).to.equal(36);
 		expect(order.dateTime).to.be.a("Date");
@@ -46,7 +45,7 @@ describe("Order Model - New Order", () => {
 		expect(order.state).to.be.a("string");
 		expect(order.state).to.equal("in-progress");
 		expect(order.location).to.be.a("string");
-		expect(order.location).to.equal("colville");
+		expect(order.location).to.equal("store#");
 		expect(order.method).to.be.a("string");
 		expect(order.method).to.equal("delivery");
 		expect(order.customerName).to.be.a("string");
@@ -55,7 +54,6 @@ describe("Order Model - New Order", () => {
 		expect(order.customerAddress).to.equal("address");
 		expect(order.customerPhone).to.be.a("string");
 		expect(order.customerPhone).to.equal("123-456-7890");
-		// should be and Array[1]
 		expect(order.items).to.be.an("array");
 		expect(order.items.length).to.equal(0);
 		expect(order.paymentID).to.be.a("string");
