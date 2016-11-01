@@ -7,8 +7,6 @@ const db = require("../helpers/db");
 const orderModel = require("../models/order");
 const itemModel = require("../models/item");
 
-let pid;
-
 /**
 * newOrder
 * Creates a new order, and sends the client back the information
@@ -142,7 +140,6 @@ module.exports.addItem = function* addItem() {
 module.exports.payment = function* payment()
 {
 	const params = this.request.body;
-	let data;
 
 	if (!params.stripeToken) {
 		this.throw(400, "Sorry, something has gone awry.");
@@ -157,12 +154,10 @@ module.exports.payment = function* payment()
 		currency: "USD",
 		source: params.stripeToken,
 		description: `${config.site.name} order#: ${this.session.id}`
-	}, (err, charge) => {
-		data = charge.id;
 	});
 
 	yield this.render("payment/payment_success", {
-		id: data
+		id: charge.id
 	});
 };
 
