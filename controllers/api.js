@@ -142,30 +142,30 @@ module.exports.addItem = function* addItem() {
 module.exports.payment = function* payment()
 {
 	const params = this.request.body;
+	let data;
 
 	if (!params.stripeToken) {
 		this.throw(400, "Sorry, something has gone awry.");
 	}
-	// TODO: error checking for amount of the order.
 	if (!params.amount) {
 		this.throw(400, "A purchase amount must be supplied.");
 	}
+	const chargeAmount = params.amount * 100;
 
 	const charge = stripe.charges.create({
 		amount: (params.amount * 100),
 		currency: "USD",
 		source: params.stripeToken,
 		description: `${config.site.name} order#: ${this.session.id}`
-	}, (err, res) => {
-		if (err && err.type === "StripeCardError") {
-			// The card has been declined
-		}
-		pid = res.id;
+	}, (err, charge) => {
+		data = charge.id;
 	});
-	yield this.render("payment/processing", {
-		script: "payment/processing"
+
+	yield this.render("payment/payment_success", {
+		id: data
 	});
 };
+
 
 module.exports.success = function* success() {
 	this.session.pid = pid;
@@ -177,3 +177,9 @@ module.exports.success = function* success() {
 		this.throw(400, "Something has gone terribly wrong.");
 	}
 };
+
+function* process() {
+	yield this.render("payment/processing", {
+		script: "payment/processing"
+	});
+}
