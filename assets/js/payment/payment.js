@@ -1,4 +1,4 @@
-Stripe.setPublishableKey("pk_test_UdQLqxr8vCW8VMFGKGY4XrWq");
+Stripe.setPublishableKey("PUT YOUR KEY HERE");
 
 $(document).ready(function(){
 
