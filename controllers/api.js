@@ -43,7 +43,6 @@ module.exports.getOrder = function* getOrder() {
 
 	if (!this.session.id) {
 		this.status = 400;
-		console.log(params);
 		return this.body = {error: true, message: "Must include orderID"};
 	}
 
@@ -118,8 +117,8 @@ module.exports.addItem = function* addItem() {
 		console.log("Something went wrong getting the order");
 		return order;
 	}
-
 	const item = params.item;
+	order = orderModel.addToTotal(order, item.price);
 	order = orderModel.addItem(order, item);
 	if (order.error === true) {
 		// something went wrong during adding item
@@ -137,19 +136,29 @@ module.exports.addItem = function* addItem() {
 	return this.body = order;
 };
 
+module.exports.cart = function* cart() {
+	const document = yield db.getDocument(this.session.id, "orders");
+	this.session.total = document.orderTotal;
+	const total = (document.orderTotal / 100);
+
+	yield this.render("payment/payment", {
+		chargeAmount: total,
+		script: "payment/payment"
+	});
+};
+
 module.exports.payment = function* payment() {
 	const params = this.request.body;
 
 	if (!params.stripeToken) {
 		this.throw(400, "Sorry, something has gone awry.");
 	}
-	if (!params.amount) {
-		this.throw(400, "A purchase amount must be supplied.");
+	if (!this.session.total) {
+		this.throw(400, "A purchase amount was not supplied.");
 	}
-	const chargeAmount = params.amount * 100;
 
 	const charge = yield stripe.charges.create({
-		amount: (params.amount * 100),
+		amount: this.session.total,
 		currency: "USD",
 		source: params.stripeToken,
 		description: `${config.site.name} order#: ${this.session.id}`

@@ -30,6 +30,7 @@ describe("Order Model - New Order", () => {
 		expect(order).to.have.property("customerAddress");
 		expect(order).to.have.property("customerPhone");
 		expect(order).to.have.property("items");
+		expect(order).to.have.property("orderTotal");
 		expect(order).to.have.property("paymentID");
 		return done();
 	});
@@ -56,6 +57,8 @@ describe("Order Model - New Order", () => {
 		expect(order.customerPhone).to.equal("123-456-7890");
 		expect(order.items).to.be.an("array");
 		expect(order.items.length).to.equal(0);
+		expect(order.orderTotal).to.be.a("number");
+		expect(order.orderTotal).to.equal(0);
 		expect(order.paymentID).to.be.a("string");
 		expect(order.paymentID).to.equal("0000");
 
@@ -65,7 +68,7 @@ describe("Order Model - New Order", () => {
 
 describe("Order Model - Add Item", () => {
 	before(() => {
-		item = itemModel.newItem("name", "cat", "desc", 24.99);
+		item = itemModel.newItem("name", "cat", "desc", 2499);
 		orderModel.addItem(order, item);
 	});
 
@@ -89,7 +92,7 @@ describe("Order Model - Add Item", () => {
 		expect(order.items[0].name).to.be.a("string");
 		expect(order.items[0].name).to.have.equal("name");
 		expect(order.items[0].price).to.be.a("number");
-		expect(order.items[0].price).to.have.equal(24.99);
+		expect(order.items[0].price).to.have.equal(2499);
 		expect(order.items[0].category).to.be.a("string");
 		expect(order.items[0].category).to.have.equal("cat");
 		expect(order.items[0].description).to.be.a("string");
@@ -109,6 +112,35 @@ describe("Order Model - Add Payment ID", () => {
 		return done();
 	});
 });
+
+describe("Order Model - Add To Total", () => {
+	before(() => {
+		orderModel.addToTotal(order, item.price);
+	});
+
+	it("order should contain the modified order total", (done) => {
+		expect(order.orderTotal).to.be.a("number");
+		expect(order.orderTotal).to.equal(2499);
+		return done();
+	});
+
+	it("order should increment with multiple items", (done) => {
+		let total = 0;
+		const newItem = itemModel.newItem("name", "cat", "desc", 2499);
+		orderModel.addItem(order, item);
+		for (const item of order.items) {
+			total += item.price;
+		}
+		orderModel.addToTotal(order, total);
+
+		expect(total).to.be.a("number");
+		expect(total).to.equal(4998);
+		expect(order.orderTotal).to.be.a("number");
+		expect(order.orderTotal).to.equal(7497);
+		return done();
+	});
+});
+
 
 describe("Order Model - Change Order State", () => {
 	before(() => {

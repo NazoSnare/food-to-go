@@ -29,6 +29,7 @@ module.exports = {
 			customerAddress: "address",
 			customerPhone: "123-456-7890",
 			items: [],
+			orderTotal: 0,
 			paymentID: "0000"
 		};
 
@@ -81,6 +82,23 @@ module.exports = {
 	},
 
 	/**
+	* addToTotal
+	* Attempts to change the total of the order
+	*
+	* @param {string} order - The full order object
+	* @param {string} price - The price to add to the total
+	* @returns {object} order -  The full order object
+	*/
+	addToTotal: (order, price) => {
+		// add the total here
+		let total = parseInt(order.orderTotal);
+		const priceToAdd = parseInt(price);
+		total += priceToAdd;
+		order.orderTotal = total;
+		return order;
+	},
+
+	/**
 	* changeState
 	* Attempts to change the state of the order
 	*
@@ -89,7 +107,7 @@ module.exports = {
 	* @returns {object} order -  The full order object
 	*/
 	changeState: (order, state) => {
-		// add the id here
+		// add the state here
 		order.state = state;
 		return order;
 	}
