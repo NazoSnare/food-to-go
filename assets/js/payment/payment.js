@@ -1,7 +1,6 @@
 Stripe.setPublishableKey("pk_test_UdQLqxr8vCW8VMFGKGY4XrWq");
 
 $(document).ready(function(){
-
 	$("#charge-error").hide();
 
 	$("#payment-form").submit(function(event) {
@@ -9,6 +8,7 @@ $(document).ready(function(){
 		var $form = $(this);
 		$form.find("button").prop('disabled', true);
 		Stripe.card.createToken($form, stripeResponseHandler);
+		$(".loader").show().fadeIn("slow");
 		return false;
 	});
 

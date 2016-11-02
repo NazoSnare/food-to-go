@@ -78,6 +78,20 @@ module.exports = {
 		// add the id here
 		order.paymentID = id;
 		return order;
+	},
+
+	/**
+	* changeState
+	* Attempts to change the state of the order
+	*
+	* @param {string} order - The full order object
+	* @param {string} state - The state to set in the order object
+	* @returns {object} order -  The full order object
+	*/
+	changeState: (order, state) => {
+		// add the id here
+		order.state = state;
+		return order;
 	}
 
 };

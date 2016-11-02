@@ -109,3 +109,15 @@ describe("Order Model - Add Payment ID", () => {
 		return done();
 	});
 });
+
+describe("Order Model - Change Order State", () => {
+	before(() => {
+		orderModel.changeState(order, "modified");
+	});
+
+	it("order should contain the modified state", (done) => {
+		expect(order.state).to.be.a("string");
+		expect(order.state).to.equal("modified");
+		return done();
+	});
+});
