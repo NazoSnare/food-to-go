@@ -7,7 +7,8 @@
     "start": "./node_modules/.bin/nodemon -e js,hbs index.js",
     "webserver": "node index.js",
     "test": "./node_modules/.bin/mocha ./tests/ && ./node_modules/.bin/eslint .",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/"
+		"coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/",
+		"coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -46,9 +47,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.14",
     "eslint": "^3.2.2",
     "istanbul": "^0.4.4",
     "mocha": "^3.0.0",
+    "mocha-lcov-reporter": "^1.2.0",
     "nodemon": "^1.11.0",
     "shipit-cli": "^1.4.1",
     "shipit-deploy": "^2.1.2"
