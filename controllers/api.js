@@ -137,8 +137,7 @@ module.exports.addItem = function* addItem() {
 	return this.body = order;
 };
 
-module.exports.payment = function* payment()
-{
+module.exports.payment = function* payment() {
 	const params = this.request.body;
 
 	if (!params.stripeToken) {
@@ -156,25 +155,21 @@ module.exports.payment = function* payment()
 		description: `${config.site.name} order#: ${this.session.id}`
 	});
 
+	this.session.pid = charge.id;
+
 	yield this.render("payment/payment_success", {
-		id: charge.id
+		id: charge.id,
+		script: "payment/success"
 	});
 };
 
+module.exports.savepid = function* savepid() {
+	const document = yield db.getDocument(this.session.id, "orders");
 
-module.exports.success = function* success() {
-	this.session.pid = pid;
-	if (this.session.pid !== undefined) {
-		yield this.render("payment/payment_success", {
-			id: this.session.pid
-		});
-	} else {
-		this.throw(400, "Something has gone terribly wrong.");
-	}
+	let order = orderModel.addPaymentID(document, this.session.pid);
+	order = orderModel.changeState(order, "paid");
+
+	const result = yield db.saveDocument(order, "orders");
+
+	return this.body = result;
 };
-
-function* process() {
-	yield this.render("payment/processing", {
-		script: "payment/processing"
-	});
-}
