@@ -43,7 +43,6 @@ module.exports.getOrder = function* getOrder() {
 
 	if (!this.session.id) {
 		this.status = 400;
-		console.log(params);
 		return this.body = {error: true, message: "Must include orderID"};
 	}
 
@@ -119,7 +118,6 @@ module.exports.addItem = function* addItem() {
 		return order;
 	}
 	const item = params.item;
-	console.log(item.price);
 	order = orderModel.addToTotal(order, item.price);
 	order = orderModel.addItem(order, item);
 	if (order.error === true) {
