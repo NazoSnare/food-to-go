@@ -1,0 +1,10 @@
+{
+   "_id": "admin",
+   "_rev": "5-ac452133dc863c043c0ea31a6af685e9",
+   "error": false,
+   "id": "admin",
+   "username": "admin",
+   "password": "$2a$12$aHhaETOKe7iGQtB8uQgxl.IylXdwbNeKxvT0NSzwVnd/MZvzWSKBm",
+   "storeAccount": true,
+   "authLevel": 99
+}

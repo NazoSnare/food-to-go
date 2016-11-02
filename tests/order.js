@@ -66,6 +66,19 @@ describe("Order Model - New Order", () => {
 	});
 });
 
+describe("Order Model - Add Customer Information", () => {
+	before(() => {
+		orderModel.addCustInfo(order, "TestName", "TestAddress", "800-555-TEST");
+	});
+
+	it("order should contain the modified customer information", (done) => {
+		expect(order.customerName).to.equal("TestName");
+		expect(order.customerAddress).to.equal("TestAddress");
+		expect(order.customerPhone).to.equal("800-555-TEST");
+		return done();
+	});
+});
+
 describe("Order Model - Add Item", () => {
 	before(() => {
 		item = itemModel.newItem("name", "cat", "desc", 2499);
