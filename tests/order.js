@@ -68,7 +68,7 @@ describe("Order Model - New Order", () => {
 
 describe("Order Model - Add Item", () => {
 	before(() => {
-		item = itemModel.newItem("name", "cat", "desc", 24.99);
+		item = itemModel.newItem("name", "cat", "desc", 2499);
 		orderModel.addItem(order, item);
 	});
 
@@ -92,7 +92,7 @@ describe("Order Model - Add Item", () => {
 		expect(order.items[0].name).to.be.a("string");
 		expect(order.items[0].name).to.have.equal("name");
 		expect(order.items[0].price).to.be.a("number");
-		expect(order.items[0].price).to.have.equal(24.99);
+		expect(order.items[0].price).to.have.equal(2499);
 		expect(order.items[0].category).to.be.a("string");
 		expect(order.items[0].category).to.have.equal("cat");
 		expect(order.items[0].description).to.be.a("string");
@@ -120,14 +120,13 @@ describe("Order Model - Add To Total", () => {
 
 	it("order should contain the modified order total", (done) => {
 		expect(order.orderTotal).to.be.a("number");
-		expect(order.orderTotal).to.equal(24.99);
-		console.log(order);
+		expect(order.orderTotal).to.equal(2499);
 		return done();
 	});
 
 	it("order should increment with multiple items", (done) => {
 		let total = 0;
-		const newItem = itemModel.newItem("name", "cat", "desc", 24.99);
+		const newItem = itemModel.newItem("name", "cat", "desc", 2499);
 		orderModel.addItem(order, item);
 		for (const item of order.items) {
 			total += item.price;
@@ -135,10 +134,9 @@ describe("Order Model - Add To Total", () => {
 		orderModel.addToTotal(order, total);
 
 		expect(total).to.be.a("number");
-		expect(total).to.equal(49.98);
+		expect(total).to.equal(4998);
 		expect(order.orderTotal).to.be.a("number");
-		expect(order.orderTotal).to.equal(74.97);
-		console.log(order);
+		expect(order.orderTotal).to.equal(7497);
 		return done();
 	});
 });
