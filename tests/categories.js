@@ -5,7 +5,7 @@ const catModel = require("../models/categories");
 
 let category;
 
-describe("Item Model - New Item", () => {
+describe("Category Model - New Category", () => {
 	before(() => {
 		category = catModel.newCategory("name");
 	});

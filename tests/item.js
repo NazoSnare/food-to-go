@@ -7,7 +7,7 @@ let item;
 
 describe("Item Model - New Item", () => {
 	before(() => {
-		item = itemModel.newItem("name", "category", "description", 0);
+		item = itemModel.newItem("name", "category", "description", 0.00);
 	});
 
 	it("item should be a valid object", (done) => {
@@ -42,7 +42,7 @@ describe("Item Model - New Item", () => {
 		expect(item.options.length).to.equal(0);
 		// should be 0 since there are no items in the order
 		expect(item.price).to.be.a("number");
-		expect(item.price).to.equal(0);
+		expect(item.price).to.equal(0.00);
 
 		return done();
 	});

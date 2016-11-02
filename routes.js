@@ -21,7 +21,7 @@ routes.get("/", main.index);
 routes.get("/ordering", main.ordering);
 routes.get("/store", store.store);
 // routes.get("/store/add", store.add);
-routes.get("/checkout", main.cart);
+routes.get("/checkout", api.cart);
 routes.get("/store/add/item", store.addItemPage);
 routes.get("/store/admin", store.admin);
 routes.get("/store/add/user", store.addUserPage);

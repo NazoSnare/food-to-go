@@ -12,7 +12,7 @@ module.exports = {
 	* @param {string} name
 	* @param {string} category
 	* @param {string} description
-	* @param {string} price
+	* @param {number} price
 	* @returns {object} order -  The full item object
 	*/
 	newItem: (name, cat, desc, price) => {

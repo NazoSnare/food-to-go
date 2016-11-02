@@ -48,11 +48,6 @@ $( document ).ready(function() {
 	 });
 });
 
-	$("#checkoutButton").on("click", function(e) {
-		e.preventDefault();
-		alert("Checkout Functionality to be added!")
-	});
-
 	$("#cartButton").on("click", function(e) {
 		e.preventDefault();
 
