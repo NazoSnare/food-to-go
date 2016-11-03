@@ -1,4 +1,4 @@
-# Food to go! [![Build Status](https://travis-ci.org/cynical89/food-to-go.svg?branch=master)](https://travis-ci.org/cynical89/food-to-go) [![Coverage Status](https://coveralls.io/repos/github/cynical89/food-to-go/badge.svg)](https://coveralls.io/github/cynical89/food-to-go)
+# Food to go! [![Build Status](https://travis-ci.org/cynical89/food-to-go.svg?branch=master)](https://travis-ci.org/cynical89/food-to-go) [![Coverage Status](https://coveralls.io/repos/github/cynical89/food-to-go/badge.svg?branch=master)](https://coveralls.io/github/cynical89/food-to-go?branch=master)
 
 A great way to order your food online!
 
