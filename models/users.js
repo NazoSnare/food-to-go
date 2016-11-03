@@ -22,12 +22,14 @@ module.exports = {
 
 	getUser: function getUser(username, password, test = false) {
 		let document;
+		/* istanbul ignore else  */
 		if (test === true) {
 			document = viewData;
 		} else {
 			document = db.getDocument(username, "ftgusers");
 		}
 		const passwordMatch = comparePassword(password, document);
+		/* istanbul ignore if  */
 		if (!passwordMatch) {
 			return {error: true, message: "You must provide valid credentials"};
 		}

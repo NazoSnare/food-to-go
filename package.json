@@ -7,7 +7,7 @@
     "start": "./node_modules/.bin/nodemon -e js,hbs index.js",
     "webserver": "node index.js",
     "test": "./node_modules/.bin/mocha ./tests/ && ./node_modules/.bin/eslint .",
-		"coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./tests/ -x ./helpers/",
+		"coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha /tests/ -x **/helpers/**",
 		"coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
