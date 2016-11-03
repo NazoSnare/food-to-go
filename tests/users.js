@@ -2,6 +2,7 @@
 
 const expect = require("chai").expect;
 const userModel = require("../models/users");
+const bcrypt = require("bcrypt");
 
 let user;
 
@@ -39,6 +40,18 @@ describe("User Model - New User", () => {
 		expect(user.storeAccount).to.equal(false);
 		expect(user.authLevel).to.be.a("number");
 		expect(user.authLevel).to.equal(99);
+		return done();
+	});
+});
+
+describe("User Model - Get User ", () => {
+	before(() => {
+		user = userModel.getUser("admin", "ftgdefault", true);
+	});
+
+	it("Returned user should be a valid object", (done) => {
+		expect(user).to.not.be.an("undefined");
+		expect(user).to.be.an("object");
 		return done();
 	});
 });
