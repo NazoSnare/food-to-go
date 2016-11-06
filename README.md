@@ -4,8 +4,9 @@ A great way to order your food online!
 
 ## Prerequisites
 * [Node.js](https://nodejs.org/en/) (Version 5 and up recommended)
-* [CouchDB](http://couchdb.apache.org/)
+* [CouchDB](http://couchdb.apache.org/) ( for data storing)
 * [Stripe API key](https://stripe.com/) (for payment processing)
+* [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) (for geocoding and distance matrix)
 * [Github Client ID and Secret](https://github.com/settings/developers) (for OAuth)
 
 ### Installation
