@@ -1,4 +1,8 @@
 "use strict";
+
+const config = require("../config.json");
+const moment = require("moment-timezone");
+
 /**
  * Order Model
  * In charge of all things dealing with the orders
@@ -20,7 +24,7 @@ module.exports = {
 		const order = {
 			error: false,
 			id: chance.guid(),
-			dateTime: new Date(),
+			dateTime: moment().tz(config.site.timezone).format(),
 			status: "preparing",
 			state: "in-progress",
 			location: "store#",

@@ -40,6 +40,8 @@
     "koa-passport": "^1.2.0",
     "koa-router": "^5.3.0",
     "koa-static-folder": "^0.1.6",
+    "moment": "^2.15.2",
+    "moment-timezone": "^0.5.9",
     "passport-github": "^1.0.0",
     "passport-local": "^1.0.0",
     "socket.io": "^1.4.8",
