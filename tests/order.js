@@ -40,7 +40,7 @@ describe("Order Model - New Order", () => {
 		expect(order.error).to.equal(false);
 		expect(order.id).to.be.a("string");
 		expect(order.id.length).to.equal(36);
-		expect(order.dateTime).to.be.a("Date");
+		expect(order.dateTime).to.be.a("string");
 		expect(order.status).to.be.a("string");
 		expect(order.status).to.equal("preparing");
 		expect(order.state).to.be.a("string");
