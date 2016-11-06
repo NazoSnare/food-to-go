@@ -3,50 +3,107 @@ var order;
 var items;
 var count = 0;
 var checked;
+var name, address, phone, mileage;
+var store = ("575 Meyers St, Kettle Falls WA 99141");
+
+// TODO: GET THE STORE ADDRESS AND USE IT IN THE GOOGLE API.
 
 $( document ).ready(function() {
 	hideAll();
 
-		$("#content").on("change", "input", function() {
-			$("input.checkbox").not(this).prop('checked', false);
-		});
-
 	$("#infoButton").on("click", function(e) {
 		e.preventDefault();
 
-		var name = $("#name").val();
-		var address = $("#address").val() + ", " + $("#city").val() + ", " +
+		name = $("#name").val();
+		address = $("#address").val() + ", " + $("#city").val() + ", " +
 		$("#state").val() + " " + $("#zip").val();
-		var phone = $("#number").val();
+		phone = $("#number").val();
 
-		// TODO: Street address validation with google maps!
-		// check for if address is valid or not.
-		// TODO: check for distance from store to address.
-		// this is a later function.
-		console.log(name);
-		console.log(address);
-		console.log(phone);
+		// declare geocoder and distance matrix
+		var geocoder = new google.maps.Geocoder();
+		var service = new google.maps.DistanceMatrixService;
+
+		// geocode and return formatted address
+		geocoder.geocode({ "address": address }, function(results, status) {
+			if (status === "OK") {
+				address = results[0].formatted_address;
+				// trigger the save info post to save formatted address -- temp
+				$(document).trigger("trigger-matrix");
+			} else {
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		});
+
+		// check for distance from store
+		$(document).on("trigger-matrix", function() {
+		service.getDistanceMatrix({
+			origins: [address],
+			destinations: [store], // this is the store destination
+			travelMode: 'DRIVING',
+			unitSystem: google.maps.UnitSystem.IMPERIAL,
+			avoidHighways: false,
+			avoidTolls: false
+		}, function(response, status) {
+			if (status === "OK") {
+				mileage = response.rows[0].elements[0].distance.text;
+				$(document).trigger("trigger-distance");
+			} else {
+				alert("Error : " + status);
+			}
+		});
+	});
+
+	$(document).on("trigger-distance", function() {
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "/api/checkDistance",
+		data: {distance: mileage}
+	}).done(function(result) {
+		if (result.error === true) {
+			alert(result.message);
+			return console.error(result.message);
+		}
+		// do something with the success, like show a link
+		console.log(result);
+		if (result !== true) {
+			// TODO: probably throw an error or something
+			alert("You're to far away for delivery");
+		} else {
+			$(document).trigger("trigger-post");
+		}
+
+	}).fail(function(err) {
+		// do something with the failure, like laugh at the user
+		window.alert("hahahahaha! NO!");
+		console.error(err);
+	});
+});
+
+	$(document).on("trigger-post", function() {
 		$.ajax({
 			type: "POST",
-		 	dataType: "json",
-		 	url: "/api/info",
+			dataType: "json",
+			url: "/api/info",
 			data: {order: order, name: name, address: address, phone: phone},
-	 	}).done(function(result) {
-		 	if (result.error === true) {
-		 		alert(result.message);
-			 	return console.error(result.message);
-		 	}
+		}).done(function(result) {
+				if (result.error === true) {
+					alert(result.message);
+				return console.error(result.message);
+				}
 			// do something with the success, like show a link
 			console.log(result);
 			$("#deliveryInfo").hide();
 			$("#one").show("fade");
 			getAllItems();
-	 	}).fail(function(err) {
+		}).fail(function(err) {
 			// do something with the failure, like laugh at the user
 			window.alert("hahahahaha! NO!");
 			console.error(err);
 	 });
-});
+	});
+
+	});
 
 	$("#cartButton").on("click", function(e) {
 		e.preventDefault();
@@ -116,5 +173,4 @@ function getAllItems() {
 		console.error(err);
  });
 }
-
 });

@@ -56,6 +56,7 @@ module.exports.getOrder = function* getOrder() {
 };
 
 module.exports.saveInfo = function* saveInfo() {
+
 	const params = this.request.body;
 	if (!params.name && !params.address && !params.phone) {
 		this.status = 400;
@@ -68,7 +69,7 @@ module.exports.saveInfo = function* saveInfo() {
 		return this.body = {error: true, message: order.message};
 	}
 
-	const result = yield orderModel.addCustInfo(order, params.customerName, params.customerAddress, params.customerPhone);
+	const result = yield orderModel.addCustInfo(order, params.name, params.address, params.phone);
 	if (order.error === true) {
 		this.status = 400;
 		return this.body = {error: true, message: order.message};
@@ -181,4 +182,21 @@ module.exports.savepid = function* savepid() {
 	const result = yield db.saveDocument(order, "orders");
 
 	return this.body = result;
+};
+
+module.exports.checkDistance = function checkDistance() {
+	const params = this.request.body;
+	const maxDistance = 25;
+	if (!params.distance) {
+		this.throw(500, "server error");
+	}
+	const distance = parseInt(params.distance);
+
+	// TODO: check store for max distance allowed. and return true or false
+
+	if (distance <= maxDistance) {
+		return this.body = true;
+	}
+	return this.body = false;
+
 };

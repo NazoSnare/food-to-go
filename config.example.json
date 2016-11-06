@@ -2,6 +2,7 @@
   "site":{
     "port": 5000,
     "name": "Food To Go",
+		"address": "STORE ADDRESS HERE",
     "secret": "foodtogo-yum",
     "oauth": {
       "host": "http://127.0.0.1",
@@ -15,6 +16,9 @@
 	"plugins": {
 		"stripe": {
 			"secret_key": "STRIPE SECRET KEY"
+		},
+		"google": {
+			"apiKey": "GOOGLE MAPS API KEY"
 		}
 	},
   "deploy":{
