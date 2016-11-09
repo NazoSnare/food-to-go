@@ -25,6 +25,7 @@ routes.get("/checkout", api.cart);
 routes.get("/store/add/item", store.addItemPage);
 routes.get("/store/admin", store.admin);
 routes.get("/store/add/user", store.addUserPage);
+routes.get("/menu", main.menu);
 
 // get info back for consumer end
 routes.post("/api/info", api.saveInfo);

@@ -24,3 +24,13 @@ module.exports.ordering = function* ordering() {
 		user: user
 	});
 };
+
+module.exports.menu = function* menu() {
+	if (this.isAuthenticated()) {
+		user = this.session.passport.user;
+	}
+	yield this.render("menu", {
+		title: config.site.name,
+		user: user
+	});
+};
