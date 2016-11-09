@@ -11,7 +11,11 @@
       "github": {
         "clientID": "OAUTH CLIENT ID FOR GITHUB",
         "clientSecret": "OAUTH CLIENT SECRET FOR GITHUB"
-      }
+      },
+			"stripe": {
+				"clientID": "OAUTH CLIENT ID FOR STRIPE",
+				"clientSecret": "OAUTH CLIENT SECRET FOR STRIPE"
+			}
     },
     "analytics": "UA-00000000-0"
   },

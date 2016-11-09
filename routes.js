@@ -19,15 +19,16 @@ const storeapi = require("./controllers/storeapi.js");
 // show pages
 routes.get("/", main.index);
 routes.get("/ordering", main.ordering);
+routes.get("/menu", main.menu);
+
+// store page routes
 routes.get("/store", store.store);
-// routes.get("/store/add", store.add);
-routes.get("/checkout", api.cart);
 routes.get("/store/add/item", store.addItemPage);
 routes.get("/store/admin", store.admin);
 routes.get("/store/add/user", store.addUserPage);
-routes.get("/menu", main.menu);
 
-// get info back for consumer end
+// consumer api routes
+routes.get("/checkout", api.cart);
 routes.post("/api/info", api.saveInfo);
 routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
@@ -60,6 +61,17 @@ routes.get("/auth/github",
 
 routes.get("/auth/github/callback",
 	passport.authenticate("github", {
+		successRedirect: "/account",
+		failureRedirect: "/"
+	})
+);
+
+routes.get("/auth/stripe",
+	passport.authenticate("stripe")
+);
+
+routes.get("/auth/stripe/callback",
+	passport.authenticate("stripe", {
 		successRedirect: "/account",
 		failureRedirect: "/"
 	})

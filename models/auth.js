@@ -35,6 +35,23 @@ passport.use(new GithubStrategy({
 	});
 }));
 
+const StripeStrategy = require("passport-stripe").Strategy;
+passport.use(new StripeStrategy({
+	clientID: config.site.oauth.stripe.clientID,
+	clientSecret: config.site.oauth.stripe.clientSecret,
+	callbackURL: `${config.site.oauth.host}${port}/auth/stripe/callback`
+}, (token, tokenSecret, profile, done) => {
+	// retrieve user ...
+	co(function* auth() {
+		// do some async/yield stuff here to get/set profile data
+		done(null, profile);
+	}).catch(function onError(e) {
+		console.error("Something went terribly wrong!");
+		console.error(e.stack);
+		done(e, null);
+	});
+}));
+
 const LocalStrategy = require("passport-local").Strategy;
 passport.use(new LocalStrategy((username, password, done) => {
 	co(function* auth() {
