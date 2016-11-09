@@ -192,6 +192,7 @@ module.exports.geocode = function* geocode() {
 	const result = yield google.matrix(geocode[0].formatted_address);
 	const distance = parseFloat(result.text);
 
+	// TODO: instead of returning a bool, render a new page to select items and add to order
 	if (distance <= config.site.deliveryDistance) {
 		return this.body = true;
 	}
