@@ -1,7 +1,7 @@
 "use strict";
 
 const config = require("../config.json");
-const stripe = require("../index.js").stripe;
+const stripe = require("../helpers/stripe.js");
 const parse = require("co-body");
 const db = require("../helpers/db");
 const orderModel = require("../models/order");
@@ -158,12 +158,7 @@ module.exports.payment = function* payment() {
 		this.throw(400, "A purchase amount was not supplied.");
 	}
 
-	const charge = yield stripe.charges.create({
-		amount: this.session.total,
-		currency: "USD",
-		source: params.stripeToken,
-		description: `${config.site.name} order#: ${this.session.id}`
-	});
+	const charge = yield stripe.charge(params.total, params.stripeToken);
 
 	this.session.pid = charge.id;
 

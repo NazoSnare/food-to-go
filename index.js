@@ -6,7 +6,6 @@ const koa = require("koa");
 const hbs = require("koa-hbs");
 const serve = require("koa-static-folder");
 const cors = require("koa-cors");
-const stripe = require("stripe")(config.plugins.stripe.secret_key);
 
 // for passport support
 const session = require("koa-generic-session");
@@ -18,7 +17,6 @@ app.use(cors());
 
 exports.app = app;
 exports.passport = passport;
-exports.stripe = stripe;
 
 // the auth model for passport support
 require("./models/auth");
