@@ -3,6 +3,7 @@
     "port": 5000,
     "name": "Food To Go",
 		"address": "STORE ADDRESS HERE",
+		"deliveryDistance": 20,
 		"timezone": "America/Los_Angeles",
     "secret": "foodtogo-yum",
     "oauth": {

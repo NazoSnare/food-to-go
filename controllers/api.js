@@ -2,6 +2,7 @@
 
 const config = require("../config.json");
 const stripe = require("../helpers/stripe.js");
+const google = require("../helpers/google.js");
 const parse = require("co-body");
 const db = require("../helpers/db");
 const orderModel = require("../models/order");
@@ -179,19 +180,20 @@ module.exports.savepid = function* savepid() {
 	return this.body = result;
 };
 
-module.exports.checkDistance = function checkDistance() {
+module.exports.geocode = function* geocode() {
 	const params = this.request.body;
-	const maxDistance = 25;
-	if (!params.distance) {
-		this.throw(500, "server error");
+	if (!params.address) {
+		this.throw(400, "You must supply an address to geocode");
 	}
-	const distance = parseInt(params.distance);
 
-	// TODO: check store for max distance allowed. and return true or false
+	const geocode = yield google.geocode(params.address);
+	console.log(geocode[0].formatted_address);
 
-	if (distance <= maxDistance) {
+	const result = yield google.matrix(geocode[0].formatted_address);
+	const distance = parseFloat(result.text);
+
+	if (distance <= config.site.deliveryDistance) {
 		return this.body = true;
 	}
 	return this.body = false;
-
 };
