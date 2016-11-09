@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/cynical89/food-to-go#readme",
   "dependencies": {
+    "@google/maps": "^0.3.0",
     "bcrypt": "^0.8.7",
     "bluebird": "^3.4.1",
     "chance": "^1.0.4",

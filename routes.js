@@ -32,8 +32,8 @@ routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
 routes.post("/api/getCategory", store.getCategory);
 routes.post("/api/save", api.savepid);
-routes.post("/api/checkDistance", api.checkDistance);
 routes.post("/stripe", api.payment);
+routes.post("/api/geocode", api.geocode);
 
 // for remote api
 routes.get("/api/success", storeapi.success);
