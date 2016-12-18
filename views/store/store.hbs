@@ -13,7 +13,6 @@
 				<table class="table">
 					<thread>
 						<tr>
-							<th>#</th>
 							<th>State</th>
 							<th>Date & Time</th>
 							<th>Store</th>
@@ -22,7 +21,31 @@
 						</tr>
 					</thread>
 					<tbody id="content">
-						<!-- content appended here -->
+						{{#each orders}}
+							<tr>
+								<td>
+									{{this.value.state}}
+								</td>
+								<td>
+									{{this.value.dateTime}}
+								</td>
+								<td>
+									{{this.value.location}}
+								</td>
+								<td>
+									{{this.value.method}}
+								</td>
+								<td>
+									<div class="dropdown"><button class="btn btn-default dropdown-toggle"
+										type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										View Items<span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+											{{#each this.value.items}}
+												<li>{{this}}</li>
+											{{/each}}
+										</ul></div>
+								</td>
+							</tr>
+						{{/each}}
 					</tbody>
 				</table>
 		</div>

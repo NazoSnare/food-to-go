@@ -7,6 +7,8 @@ const itemModel = require("../models/item");
 const catModel = require("../models/categories");
 const userModel = require("../models/users");
 
+let user;
+
 // Below are the GET routes for the store end
 module.exports.storeLogin = function* storeLogin() {
 	if (this.isAuthenticated() && this.session.passport.user.store === true) {
@@ -20,9 +22,13 @@ module.exports.storeLogin = function* storeLogin() {
 
 // Show the store view
 module.exports.store = function* store() {
+	const orders = yield db.getAllOrders;
 	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+		user = this.session.passport.user;
 		yield this.render("store/store", {
 			title: config.site.name,
+			orders: orders,
+			user: user,
 			script: "store/store"
 		});
 	} else {
