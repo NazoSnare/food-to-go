@@ -19,6 +19,10 @@
     },
     "analytics": "UA-00000000-0"
   },
+	"db": {
+		"username": "user",
+		"password": "password"
+	},
 	"plugins": {
 		"stripe": {
 			"secret_key": "STRIPE SECRET KEY"
