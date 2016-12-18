@@ -20,13 +20,13 @@ module.exports = {
 		return user;
 	},
 
-	getUser: function getUser(username, password, test = false) {
+	getUser: function* getUser(username, password, test = false) {
 		let document;
 		/* istanbul ignore else  */
 		if (test === true) {
 			document = viewData;
 		} else {
-			document = db.getDocument(username, "ftgusers");
+			document = yield db.getDocument(username, "ftgusers");
 		}
 		const passwordMatch = comparePassword(password, document);
 		/* istanbul ignore if  */

@@ -80,7 +80,7 @@ routes.get("/auth/stripe/callback",
 
 routes.post("/auth/local",
 	passport.authenticate("local", {
-		successRedirect: "/account",
+		successRedirect: "/store",
 		failureRedirect: "/login_error"
 	})
 );

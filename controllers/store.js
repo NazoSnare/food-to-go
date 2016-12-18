@@ -11,24 +11,22 @@ let user;
 
 // Below are the GET routes for the store end
 module.exports.storeLogin = function* storeLogin() {
-	if (this.isAuthenticated() && this.session.passport.user.store === true) {
-		return this.redirect("/store/store");
+	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
+		return this.redirect("/store");
 	}
 	yield this.render("store/storeLogin", {
-		title: config.site.name,
-		script: "store/storeLogin"
+		title: config.site.name
 	});
 };
 
 // Show the store view
 module.exports.store = function* store() {
 	const orders = yield db.getAllOrders;
-	if (this.isAuthenticated() && this.session.passport.user.store === true) {
-		user = this.session.passport.user;
+	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
 		yield this.render("store/store", {
 			title: config.site.name,
 			orders: orders,
-			user: user,
+			user: this.session.passport.user,
 			script: "store/store"
 		});
 	} else {
@@ -38,9 +36,10 @@ module.exports.store = function* store() {
 
 // Show the add item view
 module.exports.addItemPage = function* addItemPage() {
-	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
 		yield this.render("store/add", {
 			title: config.site.name,
+			user: this.session.passport.user,
 			script: "store/addItem"
 		});
 	} else {
@@ -49,9 +48,10 @@ module.exports.addItemPage = function* addItemPage() {
 };
 
 module.exports.admin = function* admin() {
-	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
 		yield this.render("store/admin", {
 			title: config.site.name,
+			user: this.session.passport.user,
 			script: "store/admin"
 		});
 	} else {
@@ -61,9 +61,10 @@ module.exports.admin = function* admin() {
 
 // Show the add item view
 module.exports.addUserPage = function* addUserPage() {
-	if (this.isAuthenticated() && this.session.passport.user.store === true) {
+	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
 		yield this.render("store/addUser", {
 			title: config.site.name,
+			user: this.session.passport.user,
 			script: "store/addUser"
 		});
 	} else {
@@ -82,7 +83,7 @@ module.exports.addUser = function* addUser() {
 	if (!params.password) {
 		this.throw(400, "You need to provide a password for this user");
 	}
-	if (!params.username) {
+	if (!params.level) {
 		this.throw(400, "You need to provide a level for this user");
 	}
 	const user = yield userModel.newUser(params.username, params.password, params.level);

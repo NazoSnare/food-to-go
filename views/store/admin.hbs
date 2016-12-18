@@ -1,10 +1,20 @@
-<div class="container">
-
-	<div class="starter-template">
+{{!< store}}
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			Store DashBoard
+		</h1>
+		<ol class="breadcrumb">
+			<li>
+				<i class="fa fa-dashboard"></i>  <a href="/store">Dashboard</a>
+			</li>
+		</ol>
+		<hr>
+		
 		<h1>Admin Panel</h1>
 		<p class="lead">Edit menu, and run reports<br><br><br></p>
 		<form id="startForm">
-			<a class="btn btn-primary startBtn" id="acctBtn" href="/store/addUser">Add User Account</button>
+			<a class="btn btn-primary startBtn" id="acctBtn" href="/store/addUser">Add User Account</a>
 				<button class="btn btn-primary startBtn" id="addItem">Add Item</button>
 				<button class="btn btn-primary startBtn" id="editItem">Edit Item</button>
 				<button class="btn btn-primary startBtn" id="removeItem">Remove Item</button>
