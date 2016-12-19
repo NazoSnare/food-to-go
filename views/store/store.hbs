@@ -5,8 +5,8 @@
 						Store DashBoard
 				</h1>
 				<ol class="breadcrumb">
-						<li>
-								<i class="fa fa-dashboard"></i>  <a href="/store">Dashboard</a>
+						<li class="active">
+								<i class="fa fa-dashboard"></i> Dashboard
 						</li>
 				</ol>
 				<hr>
@@ -40,7 +40,7 @@
 										type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 										View Items<span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 											{{#each this.value.items}}
-												<li>{{this}}</li>
+												<li>{{this.name}}</li>
 											{{/each}}
 										</ul></div>
 								</td>
