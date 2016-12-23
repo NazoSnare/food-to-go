@@ -17,7 +17,7 @@
   "keywords": [
     "koa",
     "food",
-    "handlebars"
+		"ordering"
   ],
   "author": "cynical89 (@cynical89)",
   "license": "ISC",
@@ -32,18 +32,14 @@
     "chance": "^1.0.4",
     "co": "^4.6.0",
     "cradle": "^0.7.1",
-    "guid": "0.0.12",
     "koa": "^1.1.2",
     "koa-bodyparser": "^2.0.1",
     "koa-cors": "0.0.16",
     "koa-generic-session": "^1.10.0",
-    "koa-hbs": "^0.7.0",
     "koa-passport": "^1.2.0",
     "koa-router": "^5.3.0",
-    "koa-static-folder": "^0.1.6",
     "moment": "^2.15.2",
     "moment-timezone": "^0.5.9",
-    "passport-github": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-stripe": "^0.2.2",
     "socket.io": "^1.4.8",
