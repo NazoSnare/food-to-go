@@ -7,73 +7,6 @@ const itemModel = require("../models/item");
 const catModel = require("../models/categories");
 const userModel = require("../models/users");
 
-let user;
-
-// Below are the GET routes for the store end
-module.exports.storeLogin = function* storeLogin() {
-	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
-		return this.redirect("/store");
-	}
-	yield this.render("store/storeLogin", {
-		title: config.site.name
-	});
-};
-
-// Show the store view
-module.exports.store = function* store() {
-	const orders = yield db.getAllOrders;
-	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
-		yield this.render("store/store", {
-			title: config.site.name,
-			orders: orders,
-			user: this.session.passport.user,
-			script: "store/store"
-		});
-	} else {
-		return this.redirect("/");
-	}
-};
-
-// Show the add item view
-module.exports.addItemPage = function* addItemPage() {
-	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
-		yield this.render("store/add", {
-			title: config.site.name,
-			user: this.session.passport.user,
-			script: "store/addItem"
-		});
-	} else {
-		return this.redirect("/");
-	}
-};
-
-module.exports.admin = function* admin() {
-	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
-		yield this.render("store/admin", {
-			title: config.site.name,
-			user: this.session.passport.user,
-			script: "store/admin"
-		});
-	} else {
-		return this.redirect("/");
-	}
-};
-
-// Show the add item view
-module.exports.addUserPage = function* addUserPage() {
-	if (this.isAuthenticated() && this.session.passport.user.storeAccount === true) {
-		yield this.render("store/addUser", {
-			title: config.site.name,
-			user: this.session.passport.user,
-			script: "store/addUser"
-		});
-	} else {
-		return this.redirect("/");
-	}
-};
-
-// Below are the POST routes for the store end
-
 // Get all the orders from the db and show to the store
 module.exports.addUser = function* addUser() {
 	const params = this.request.body;
@@ -143,14 +76,4 @@ module.exports.newCategory = function* newCategory(id) {
 		return this.body = {error: true, message: result.message};
 	}
 	return this.body = result;
-};
-
-module.exports.getCategory = function* getCategory(id) {
-
-	const category = yield db.getDocument(id, "categories");
-	if (category.error === true) {
-		this.status = 400;
-		return this.body = {error: true, message: category.message};
-	}
-	return this.body = item;
 };

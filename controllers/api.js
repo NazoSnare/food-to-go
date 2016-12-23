@@ -8,11 +8,6 @@ const db = require("../helpers/db");
 const orderModel = require("../models/order");
 const itemModel = require("../models/item");
 
-/**
-* newOrder
-* Creates a new order, and sends the client back the information
-*
-*/
 module.exports.newOrder = function* newOrder() {
 	const params = this.request.body;
 	if (!params.location && !params.method) {
@@ -36,7 +31,6 @@ module.exports.newOrder = function* newOrder() {
 
 	// return result
 	return this.body = result;
-
 };
 
 module.exports.getOrder = function* getOrder() {
@@ -143,10 +137,7 @@ module.exports.cart = function* cart() {
 	this.session.total = document.orderTotal;
 	const total = (document.orderTotal / 100);
 
-	yield this.render("payment/payment", {
-		chargeAmount: total,
-		script: "payment/payment"
-	});
+	return this.body = total;
 };
 
 module.exports.payment = function* payment() {
@@ -163,10 +154,7 @@ module.exports.payment = function* payment() {
 
 	this.session.pid = charge.id;
 
-	yield this.render("payment/payment_success", {
-		id: charge.id,
-		script: "payment/success"
-	});
+	return this.body = charge;
 };
 
 module.exports.savepid = function* savepid() {
@@ -197,4 +185,13 @@ module.exports.geocode = function* geocode() {
 		return this.body = true;
 	}
 	return this.body = false;
+};
+
+module.exports.getCategory = function* getCategory(id) {
+	const category = yield db.getDocument(id, "categories");
+	if (category.error === true) {
+		this.status = 400;
+		return this.body = {error: true, message: category.message};
+	}
+	return this.body = item;
 };

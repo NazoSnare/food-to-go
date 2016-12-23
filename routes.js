@@ -17,7 +17,7 @@ const store = require("./controllers/store.js");
 routes.post("/api/info", api.saveInfo);
 routes.post("/api/items", api.getAllItems);
 routes.post("/api/addItem", api.addItem);
-routes.post("/api/getCategory", store.getCategory);
+routes.post("/api/getCategory", api.getCategory);
 routes.post("/api/save", api.savepid);
 routes.post("/api/stripe", api.payment);
 routes.post("/api/geocode", api.geocode);
