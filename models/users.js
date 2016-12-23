@@ -29,6 +29,7 @@ module.exports = {
 		} else {
 			document = yield db.getDocument(username, "ftgusers");
 		}
+		/* istanbul ignore next */
 		const passwordMatch = comparePassword(password, document);
 		/* istanbul ignore next */
 		if (!passwordMatch) {
@@ -44,5 +45,6 @@ function encryptPassword(password) {
 };
 
 function comparePassword(password, doc) {
+	/* istanbul ignore next */
 	return bcrypt.compareSync(password, doc.password);
 };
