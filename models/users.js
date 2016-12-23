@@ -21,18 +21,20 @@ module.exports = {
 	},
 
 	getUser: function* getUser(username, password, test = false) {
+		/* istanbul ignore next */
 		let document;
-		/* istanbul ignore else  */
+		/* istanbul ignore next */
 		if (test === true) {
 			document = viewData;
 		} else {
 			document = yield db.getDocument(username, "ftgusers");
 		}
 		const passwordMatch = comparePassword(password, document);
-		/* istanbul ignore if  */
+		/* istanbul ignore next */
 		if (!passwordMatch) {
 			return {error: true, message: "You must provide valid credentials"};
 		}
+		/* istanbul ignore next */
 		return document;
 	}
 };
