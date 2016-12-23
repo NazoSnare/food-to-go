@@ -45,8 +45,9 @@ describe("User Model - New User", () => {
 });
 
 describe("User Model - Get User ", () => {
-	before(() => {
-		user = userModel.getUser("admin", "ftgdefault", true);
+	before(function* before() {
+		user = yield userModel.getUser("admin", "ftgdefault", true);
+		console.log(user);
 	});
 
 	it("Returned user should be a valid object", (done) => {
