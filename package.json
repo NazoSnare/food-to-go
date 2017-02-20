@@ -17,7 +17,7 @@
   "keywords": [
     "koa",
     "food",
-		"ordering"
+    "ordering"
   ],
   "author": "cynical89 (@cynical89)",
   "license": "ISC",
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/cynical89/food-to-go#readme",
   "dependencies": {
     "@google/maps": "^0.3.0",
-    "bcrypt": "^0.8.7",
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.4.1",
     "chance": "^1.0.4",
     "co": "^4.6.0",
@@ -36,10 +36,12 @@
     "koa-bodyparser": "^2.0.1",
     "koa-cors": "0.0.16",
     "koa-generic-session": "^1.10.0",
+    "koa-jwt": "^1.3.1",
     "koa-passport": "^1.2.0",
     "koa-router": "^5.3.0",
     "moment": "^2.15.2",
     "moment-timezone": "^0.5.9",
+    "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
     "passport-stripe": "^0.2.2",
     "socket.io": "^1.4.8",

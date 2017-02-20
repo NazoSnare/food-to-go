@@ -2,7 +2,6 @@
 
 const expect = require("chai").expect;
 const userModel = require("../models/users");
-const bcrypt = require("bcrypt");
 
 let user;
 

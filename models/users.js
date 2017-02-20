@@ -2,7 +2,7 @@
 
 const Chance = require("chance");
 const db = require("../helpers/db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const viewData = require("../tests/mockData/usersdb.json");
 
 module.exports = {
